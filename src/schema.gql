@@ -34,6 +34,12 @@ type Order {
   books: [Book!]!
 }
 
+type LoginResponse {
+  user: User!
+  token: String!
+  refreshToken: String!
+}
+
 type Query {
   books: [Book!]!
   book(id: Int!): Book!
@@ -51,6 +57,7 @@ type Mutation {
   updateOrder(updateOrderInput: UpdateOrderInput!): Order!
   removeOrder(id: Int!): Order!
   createUser(createUserInput: CreateUserInput!): User!
+  loginUser(loginUserInput: LoginInput!): LoginResponse!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
 }
@@ -88,6 +95,11 @@ input CreateUserInput {
   email: String!
   password: String!
   role: String!
+}
+
+input LoginInput {
+  name: String = "nima"
+  password: String = "NIaM.1234"
 }
 
 input UpdateUserInput {

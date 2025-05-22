@@ -1,5 +1,6 @@
 // src/users/dto/create-user.input.ts
 import { InputType, Field } from '@nestjs/graphql';
+import { UserRole } from 'src/security/roles.enum';
 
 @InputType()
 export class CreateUserInput {
@@ -13,5 +14,5 @@ export class CreateUserInput {
   password: string;
 
   @Field()
-  role: string;
+  role: UserRole;
 }

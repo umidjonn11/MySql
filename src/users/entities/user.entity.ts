@@ -1,5 +1,8 @@
+import { hash } from 'bcrypt';
 import { OrdersEntity } from 'src/orders/entities/order.entity';
+import { UserRole } from 'src/security/roles.enum';
 import {
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
@@ -17,15 +20,22 @@ export class UserEntity {
   @Column()
   email: string;
 
-  @Column()
+  @Column({ nullable: false })
   password: string;
 
   @Column()
-  role: string;
+  role: UserRole;
+  @Column({ nullable: true, select: false })
+  refreshToken: string;
 
   @CreateDateColumn()
   created_at: Date;
 
   @OneToMany(() => OrdersEntity, (order) => order.user)
   orders: OrdersEntity[];
+
+  @BeforeInsert()
+  async hash() {
+    this.password = await hash(this.password, 12);
+  }
 }
