@@ -9,6 +9,7 @@ import { RolesGuard } from 'src/security/roles-guard';
 import { UserRole } from 'src/security/roles.enum';
 import {  LoginInput } from './dto/login-user.input';
 import { LoginResponse } from './dto/response-login';
+import { AuthGuard } from 'src/security/auth-guard';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -20,8 +21,8 @@ export class UsersResolver {
   }
 
   @Query(() => [User], { name: 'users' })
+  @UseGuards( RolesGuard)
   @Roles(UserRole.ADMIN)
-  @UseGuards(RolesGuard)
   findAll() {
     return this.usersService.findAll();
   }

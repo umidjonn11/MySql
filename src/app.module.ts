@@ -33,6 +33,7 @@ import { GraphQLModule } from '@nestjs/graphql';
       playground: true,
       graphiql: true,
       autoSchemaFile: './src/schema.gql',
+      context: ({ req }) => ({ req }),
     }),
   ],
   controllers: [AppController],
